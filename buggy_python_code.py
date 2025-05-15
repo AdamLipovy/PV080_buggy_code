@@ -24,7 +24,7 @@ def print_nametag(format_string, person):
     print(format_string.format(person=person))
 
 
-def fetch_website(urllib_version, url):
+def fetch_website(url):
     # Import the requested version (2 or 3) of urllib
     # exec(f"import urllib{urllib_version} as urllib", globals())
     # Fetch and print the requested URL
@@ -57,8 +57,8 @@ if __name__ == '__main__':
         new_person = Person("Vickie")
         print_nametag(input("Please format your nametag: "), new_person)
     elif choice == "2":
-        urlib_version = input("Choose version of urllib: ")
-        fetch_website(urlib_version, url="https://www.google.com")
+        # urlib_version = input("Choose version of urllib: ")
+        fetch_website(url="https://www.google.com")
     elif choice == "3":
         load_yaml(input("File name: "))
         print("Executed -ls on current folder")

@@ -1,15 +1,14 @@
 import yaml
 import flask
-import urllib
+import urllib3 as urllib
 
 app = flask.Flask(__name__)
 
 
 @app.route("/")
 def index():
-    version = flask.request.args.get("urllib_version")
     url = flask.request.args.get("url")
-    return fetch_website(version, url)
+    return fetch_website(url)
 
 
 CONFIG = {"API_KEY": "771df488714111d39138eb60df756e6b"}
@@ -22,14 +21,13 @@ def print_nametag(format_string, person):
     print(format_string.format(person=person))
 
 
-def fetch_website():
+def fetch_website(url: str):
     # Import the requested version (2 or 3) of urllib
-    # exec(f"import urllib{urllib_version} as urllib", globals())
     # Fetch and print the requested URL
 
     try:
         http = urllib.PoolManager()
-        r = http.request('GET', "https://www.google.com")
+        http.request('GET', url)
     except:
         print('Exception')
 
@@ -41,7 +39,8 @@ def load_yaml(filename):
 
 def authenticate(password):
     # Assert that the password is correct
-    assert password == "Iloveyou", "Invalid password!"
+    if(password != "Iloveyou"):
+        raise ValueError("Invalid password")
     print("Successfully authenticated!")
 
 if __name__ == '__main__':
@@ -55,7 +54,7 @@ if __name__ == '__main__':
         new_person = Person("Vickie")
         print_nametag(input("Please format your nametag: "), new_person)
     elif choice == "2":
-        fetch_website()
+        fetch_website("https://www.google.com")
     elif choice == "3":
         load_yaml(input("File name: "))
         print("Executed -ls on current folder")
